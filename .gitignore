@@ -1,13 +1,13 @@
-# 前端依赖目录
-frontend/node_modules/
+# 前端依赖
 node_modules/
-# 构建产物
-dist/
+frontend/node_modules/
+# Next构建缓存
 .next/
+dist/
 build/
-# 环境文件、日志
+# 环境、日志文件
 .env
-.env.local
+.env.*
 *.log
-# 大二进制缓存
+# 大二进制文件
 *.node
