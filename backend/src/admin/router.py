@@ -333,6 +333,58 @@ async def update_job_contact(entity_id: int, data: dict,
     allowed = {"name", "mobile", "wechat", "qq", "tags", "contact_type", "remark", "is_active"}
     return await _update_from_dict(db, await _get_entity(db, JobContact, entity_id), data, allowed)
 
+# ═══════════════════════════════════════════════════════
+#  CONTACTS  —— 软删除 + 显示/隐藏
+# ═══════════════════════════════════════════════════════
+@router.get("/job_contacts")
+async def list_contacts_admin(
+    skip: int = Query(0, ge=0), limit: int = Query(20, le=200), search: str | None = None,
+    admin: User = Depends(require_admin), db: AsyncSession = Depends(get_db),
+):
+    items, total = await _list_entities(db, JobContact, skip, limit, JobContact.id,
+                                        {"value": search, "field": "name"})
+    return {"items": items, "total": total, "skip": skip, "limit": limit}
+
+
+@router.get("/job_contacts/{entity_id}")
+async def get_contact(entity_id: int,
+    admin: User = Depends(require_admin), db: AsyncSession = Depends(get_db),
+):
+    return await _get_entity(db, JobContact, entity_id, "联系人不存在")
+
+
+@router.post("/job_contacts", status_code=201)
+async def create_contact(
+    data: dict,
+    admin: User = Depends(require_admin), db: AsyncSession = Depends(get_db),
+):
+    allowed = {"name", "mobile", "wechat", "qq", "tags", "contact_type", "remark", "is_active"}
+    obj = JobContact()
+    for k, v in data.items():
+        if k in allowed:
+            setattr(obj, k, v)
+    db.add(obj)
+    await db.commit()
+    await db.refresh(obj)
+    return obj
+
+
+@router.put("/job_contacts/{entity_id}")
+async def update_contact(entity_id: int, data: dict,
+    admin: User = Depends(require_admin), db: AsyncSession = Depends(get_db),
+):
+    obj = await _get_entity(db, JobContact, entity_id, "联系人不存在")
+    allowed = {"name", "mobile", "wechat", "qq", "tags", "contact_type", "remark", "is_active"}
+    await _update_from_dict(db, obj, data, allowed)
+    return obj
+
+
+@router.delete("/job_contacts/{entity_id}")
+async def delete_contact(entity_id: int,
+    admin: User = Depends(require_admin), db: AsyncSession = Depends(get_db),
+):
+    await _soft_delete(db, JobContact, entity_id, "联系人不存在")
+    return {"ok": True}
 
 # ═══════════════════════════════════════════════════════
 #  POSTS  —— 全字段编辑 + user_id 处理
