@@ -336,7 +336,7 @@ async def update_job_contact(entity_id: int, data: dict,
 # ═══════════════════════════════════════════════════════
 #  CONTACTS  —— 软删除 + 显示/隐藏
 # ═══════════════════════════════════════════════════════
-@router.get("/job_contacts")
+@router.get("/jobs_contacts")
 async def list_contacts_admin(
     skip: int = Query(0, ge=0), limit: int = Query(20, le=200), search: str | None = None,
     admin: User = Depends(require_admin), db: AsyncSession = Depends(get_db),
@@ -346,14 +346,14 @@ async def list_contacts_admin(
     return {"items": items, "total": total, "skip": skip, "limit": limit}
 
 
-@router.get("/job_contacts/{entity_id}")
+@router.get("/jobs_contacts/{entity_id}")
 async def get_contact(entity_id: int,
     admin: User = Depends(require_admin), db: AsyncSession = Depends(get_db),
 ):
     return await _get_entity(db, JobContact, entity_id, "联系人不存在")
 
 
-@router.post("/job_contacts", status_code=201)
+@router.post("/jobs_contacts", status_code=201)
 async def create_contact(
     data: dict,
     admin: User = Depends(require_admin), db: AsyncSession = Depends(get_db),
@@ -369,7 +369,7 @@ async def create_contact(
     return obj
 
 
-@router.put("/job_contacts/{entity_id}")
+@router.put("/jobs_contacts/{entity_id}")
 async def update_contact(entity_id: int, data: dict,
     admin: User = Depends(require_admin), db: AsyncSession = Depends(get_db),
 ):
@@ -379,7 +379,7 @@ async def update_contact(entity_id: int, data: dict,
     return obj
 
 
-@router.delete("/job_contacts/{entity_id}")
+@router.delete("/jobs_contacts/{entity_id}")
 async def delete_contact(entity_id: int,
     admin: User = Depends(require_admin), db: AsyncSession = Depends(get_db),
 ):
