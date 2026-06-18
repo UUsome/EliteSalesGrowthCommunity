@@ -42,7 +42,7 @@ export function Header() {
                   "px-4 py-2 text-sm font-medium rounded-lg transition-colors",
                   isActive
                     ? "text-brand-600 bg-brand-50"
-                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-50",
                 )}
               >
                 {link.label}
@@ -61,7 +61,7 @@ export function Header() {
                   "text-sm font-medium transition-colors",
                   pathname.startsWith("/admin")
                     ? "text-brand-600"
-                    : "text-gray-400 hover:text-gray-700"
+                    : "text-gray-400 hover:text-gray-700",
                 )}
               >
                 管理
@@ -72,7 +72,7 @@ export function Header() {
                   "text-sm font-medium transition-colors",
                   pathname.startsWith("/dashboard")
                     ? "text-brand-600"
-                    : "text-gray-600 hover:text-gray-900"
+                    : "text-gray-600 hover:text-gray-900",
                 )}
               >
                 {user.username}
@@ -83,14 +83,14 @@ export function Header() {
             </>
           ) : (
             <>
-              <Link href="/login">
+              {/*<Link href="/login">
                 <Button variant="ghost" size="sm">
                   登录
                 </Button>
               </Link>
               <Link href="/register">
                 <Button size="sm">注册</Button>
-              </Link>
+              </Link>*/}
             </>
           )}
         </div>

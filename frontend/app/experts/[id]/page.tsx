@@ -8,7 +8,7 @@ import { Card, CardContent } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { PageLoading } from "@/components/ui/Loading";
 import { formatPrice, renderStars, formatRelativeTime } from "@/lib/utils";
-
+import { MarkdownRenderer } from "@/components/ui/MarkdownRenderer";
 
 export default function ExpertDetailPage() {
   const params = useParams();
@@ -28,7 +28,8 @@ export default function ExpertDetailPage() {
   }, [params.id]);
 
   if (loading) return <PageLoading />;
-  if (!expert) return <div className="text-center py-16 text-gray-400">专家不存在</div>;
+  if (!expert)
+    return <div className="text-center py-16 text-gray-400">专家不存在</div>;
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-6 space-y-6">
@@ -42,17 +43,23 @@ export default function ExpertDetailPage() {
           </div>
           <div className="flex-1 min-w-0 text-center sm:text-left">
             <div className="flex flex-wrap items-center gap-2 mb-2 justify-center sm:justify-start">
-              <h1 className="text-2xl font-bold text-gray-900">{expert.name}</h1>
+              <h1 className="text-2xl font-bold text-gray-900">
+                {expert.name}
+              </h1>
               <Badge variant="primary">{expert.field}</Badge>
             </div>
             {expert.one_liner && (
               <p className="text-gray-600 mb-2">{expert.one_liner}</p>
             )}
             <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500 justify-center sm:justify-start">
-              <span className="text-amber-500">{renderStars(expert.rating)} {expert.rating.toFixed(1)}</span>
-              <span>⭐ {expert.rating_count || 0} 条评价</span>
-              <span>📞 {expert.consultation_count || 0} 次咨询</span>
-              {expert.experience_years && <span>🎯 {expert.experience_years} 年经验</span>}
+              <span className="text-amber-500">
+                {renderStars(expert.rating)} {expert.rating.toFixed(1)}
+              </span>
+              {/*<span>⭐ {expert.rating_count || 0} 条评价</span>
+              <span>📞 {expert.consultation_count || 0} 次咨询</span>*/}
+              {expert.experience_years && (
+                <span>🎯 {expert.experience_years} 年经验</span>
+              )}
             </div>
             <div className="mt-4 flex flex-wrap items-center gap-3 justify-center sm:justify-start">
               <span className="text-2xl font-bold text-brand-600">
@@ -69,13 +76,15 @@ export default function ExpertDetailPage() {
         <Card>
           <CardContent>
             <h3 className="font-semibold text-gray-900 mb-2">关于专家</h3>
-            <p className="text-sm text-gray-600 whitespace-pre-line">{expert.description}</p>
+            <div className="text-sm text-gray-600 whitespace-pre-line">
+              <MarkdownRenderer content={expert.description} />
+            </div>
           </CardContent>
         </Card>
       )}
 
       {/* Available Times */}
-      {expert.availabilities?.length > 0 && (
+      {/*{expert.availabilities?.length > 0 && (
         <Card>
           <CardContent>
             <h3 className="font-semibold text-gray-900 mb-3">可预约时间</h3>
@@ -85,14 +94,18 @@ export default function ExpertDetailPage() {
                   key={av.id}
                   className="px-3 py-1.5 text-sm bg-green-50 text-green-700 rounded-lg border border-green-200"
                 >
-                  {["周一", "周二", "周三", "周四", "周五", "周六", "周日"][av.day_of_week]}{" "}
+                  {
+                    ["周一", "周二", "周三", "周四", "周五", "周六", "周日"][
+                      av.day_of_week
+                    ]
+                  }{" "}
                   {av.start_time}-{av.end_time}
                 </span>
               ))}
             </div>
           </CardContent>
         </Card>
-      )}
+      )}*/}
 
       {/* Cases */}
       {expert.cases?.length > 0 && (
@@ -101,10 +114,15 @@ export default function ExpertDetailPage() {
             <h3 className="font-semibold text-gray-900 mb-3">代表案例</h3>
             <div className="space-y-4">
               {expert.cases.map((c: any) => (
-                <div key={c.id} className="border border-gray-100 rounded-lg p-4">
+                <div
+                  key={c.id}
+                  className="border border-gray-100 rounded-lg p-4"
+                >
                   <h4 className="font-medium text-gray-900 mb-1">{c.title}</h4>
                   {c.description && (
-                    <p className="text-sm text-gray-500">{c.description}</p>
+                    <div className="text-sm text-gray-500">
+                      <MarkdownRenderer content={c.description} />
+                    </div>
                   )}
                 </div>
               ))}
@@ -114,7 +132,7 @@ export default function ExpertDetailPage() {
       )}
 
       {/* History Q&A (folded) */}
-      <Card>
+      {/*<Card>
         <CardContent>
           <button
             onClick={() => setShowHistory(!showHistory)}
@@ -135,10 +153,10 @@ export default function ExpertDetailPage() {
             </div>
           )}
         </CardContent>
-      </Card>
+      </Card>*/}
 
       {/* Reviews (folded) */}
-      <Card>
+      {/*<Card>
         <CardContent>
           <button
             onClick={() => setShowReviews(!showReviews)}
@@ -159,9 +177,20 @@ export default function ExpertDetailPage() {
             </div>
           )}
         </CardContent>
+      </Card>*/}
+
+      {/* 联系方式 */}
+      <Card>
+        <CardContent>
+          <button
+            onClick={() => router.push("/contact")}
+            className="flex items-center justify-between w-full text-left"
+          >
+            <h3 className="font-semibold text-gray-900">联系方式</h3>
+            <span className="text-sm text-brand-600">前往联系我们 ▶</span>
+          </button>
+        </CardContent>
       </Card>
-
-
     </div>
   );
 }

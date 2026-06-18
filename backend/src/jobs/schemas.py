@@ -16,6 +16,7 @@ class JobCreate(BaseModel):
     special_requirements: str | None = Field(None, max_length=500)
     contact_name: str = Field(..., max_length=50)
     contact_title: str | None = Field(None, max_length=100)
+    contact_id: int | None = Field(None, ge=0)
     industry: str | None = Field(None, max_length=100)
     job_type: str | None = Field(None, max_length=100)
     description: str | None = Field(None, max_length=5000)
@@ -33,6 +34,7 @@ class JobUpdate(BaseModel):
     special_requirements: str | None = None
     contact_name: str | None = None
     contact_title: str | None = None
+    contact_id: int | None = Field(None, ge=0)
     industry: str | None = None
     job_type: str | None = None
     description: str | None = None
@@ -53,13 +55,13 @@ class JobResponse(BaseModel):
     special_requirements: str | None = None
     contact_name: str
     contact_title: str | None = None
+    contact_id: int | None = Field(None, ge=0)
     industry: str | None = None
     job_type: str | None = None
     description: str | None = None
     days_ago: int = 0
     is_active: bool = True
     created_at: datetime
-
     model_config = ConfigDict(from_attributes=True)
 
 

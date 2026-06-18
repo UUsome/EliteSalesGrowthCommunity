@@ -31,37 +31,53 @@ export default function HomePage() {
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <Loading className="min-h-[60vh]" size="lg" text="加载中..." />;
+  if (loading)
+    return <Loading className="min-h-[60vh]" size="lg" text="加载中..." />;
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-6 space-y-8">
       {/* Hero */}
       <section className="relative rounded-2xl bg-gradient-to-br from-brand-600 via-brand-700 to-accent-600 p-8 md:p-12 text-white overflow-hidden">
-        <div className="relative z-10 max-w-xl">
+        <div className="relative z-10 max-w-2xl">
           <h1 className="text-3xl md:text-4xl font-bold mb-3">
             精英销售成长社区
           </h1>
-          <p className="text-brand-100 text-base md:text-lg mb-6">
-            发现知识 · 连接专家 · 交流经验 · 成就职业
+
+          <p className="text-brand-100 text-base md:text-lg mb-6 leading-tight">
+            <strong className="text-white">个人</strong> ｜
+            <span className="opacity-60">
+              拓客有方，成交有术，复盘解惑，提升销售能力，把握行业与岗位先机。
+            </span>
+            <br />
+            <strong className="text-white">企业</strong> ｜
+            <span className="opacity-60">
+              组队高效，识人精准，人才直输，快速补齐团队，推动业务稳步增长。
+            </span>
           </p>
           <div className="flex gap-3">
             <Link href="/experts">
-              <Button variant="secondary" size="lg">找专家</Button>
+              <Button variant="secondary" size="lg">
+                找专家
+              </Button>
             </Link>
             <Link href="/posts">
-              <Button variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/10">
+              <Button
+                variant="outline"
+                size="lg"
+                className="border-white/30 text-white hover:bg-white/10"
+              >
                 逛社区
               </Button>
             </Link>
           </div>
         </div>
-        <div className="absolute right-0 top-0 w-64 h-64 opacity-10">
+        {/*<div className="absolute right-0 top-0 w-64 h-64 opacity-10">
           <div className="grid grid-cols-8 gap-4 p-8">
             {Array.from({ length: 64 }).map((_, i) => (
               <div key={i} className="w-1.5 h-1.5 rounded-full bg-white" />
             ))}
           </div>
-        </div>
+        </div>*/}
       </section>
 
       {/* 行业动态（替换原来的热门销售问题） */}
@@ -76,7 +92,9 @@ export default function HomePage() {
                     <div>
                       <h4 className="font-medium text-gray-900">{d.title}</h4>
                       <div className="flex items-center gap-2 mt-1 text-xs text-gray-400">
-                        <Badge variant="info" size="sm">{d.category}</Badge>
+                        <Badge variant="info" size="sm">
+                          {d.category}
+                        </Badge>
                       </div>
                     </div>
                     <div className="text-right text-xs text-gray-400 shrink-0">
@@ -139,8 +157,12 @@ export default function HomePage() {
                     <div>
                       <h4 className="font-medium text-gray-900">{d.title}</h4>
                       <div className="flex items-center gap-2 mt-1 text-xs text-gray-400">
-                        <Badge variant="warning" size="sm">精华</Badge>
-                        <Badge variant="info" size="sm">{d.category}</Badge>
+                        <Badge variant="warning" size="sm">
+                          精华
+                        </Badge>
+                        <Badge variant="info" size="sm">
+                          {d.category}
+                        </Badge>
                       </div>
                     </div>
                     <div className="text-right text-xs text-gray-400 shrink-0">
@@ -163,7 +185,10 @@ function SectionHeader({ title, href }: { title: string; href?: string }) {
     <div className="flex items-center justify-between mb-4">
       <h2 className="text-lg font-bold text-gray-900">{title}</h2>
       {href && (
-        <Link href={href} className="text-sm text-brand-600 hover:text-brand-700 font-medium">
+        <Link
+          href={href}
+          className="text-sm text-brand-600 hover:text-brand-700 font-medium"
+        >
           查看更多 →
         </Link>
       )}

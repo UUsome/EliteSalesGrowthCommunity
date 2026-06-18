@@ -27,7 +27,8 @@ export default function JobDetailPage() {
   }, [params.id]);
 
   if (loading) return <PageLoading />;
-  if (!job) return <div className="text-center py-16 text-gray-400">职位不存在</div>;
+  if (!job)
+    return <div className="text-center py-16 text-gray-400">职位不存在</div>;
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-6 space-y-6">
@@ -35,13 +36,26 @@ export default function JobDetailPage() {
         <CardContent>
           <div className="flex flex-wrap items-start gap-2 mb-3">
             <h1 className="text-2xl font-bold text-gray-900">{job.title}</h1>
-            {job.is_urgent && <Badge variant="danger" size="md">急招</Badge>}
-            {job.is_referral && <Badge variant="warning" size="md">内推</Badge>}
+            {job.is_urgent && (
+              <Badge variant="danger" size="md">
+                急招
+              </Badge>
+            )}
+            {job.is_referral && (
+              <Badge variant="warning" size="md">
+                内推
+              </Badge>
+            )}
           </div>
 
           <div className="flex flex-wrap items-center gap-3 text-sm text-gray-500 mb-4">
-            <span className="font-semibold text-gray-700">{job.company_name}</span>
-            <span>📍 {job.location}{job.is_remote ? " (支持远程)" : ""}</span>
+            <span className="font-semibold text-gray-700">
+              {job.company_name}
+            </span>
+            <span>
+              📍 {job.location}
+              {job.is_remote ? " (支持远程)" : ""}
+            </span>
           </div>
 
           <div className="text-2xl font-bold text-brand-600 mb-4">
@@ -51,21 +65,26 @@ export default function JobDetailPage() {
           {job.special_requirements && (
             <div className="mb-4">
               <h3 className="font-semibold text-gray-900 mb-1">特殊需求</h3>
-              <p className="text-sm text-gray-600">{job.special_requirements}</p>
+              <p className="text-sm text-gray-600">
+                {job.special_requirements}
+              </p>
             </div>
           )}
 
           {job.description && (
             <div className="mb-4">
               <h3 className="font-semibold text-gray-900 mb-1">职位描述</h3>
-              <p className="text-sm text-gray-600 whitespace-pre-line">{job.description}</p>
+              <p className="text-sm text-gray-600 whitespace-pre-line">
+                {job.description}
+              </p>
             </div>
           )}
 
           <div className="border-t border-gray-100 pt-4 mt-4">
             <h3 className="font-semibold text-gray-900 mb-2">职位负责人</h3>
             <p className="text-sm text-gray-600">
-              {job.contact_name}{job.contact_title ? ` · ${job.contact_title}` : ""}
+              {job.contact_name}
+              {job.contact_title ? ` · ${job.contact_title}` : ""}
             </p>
             <div className="mt-3 flex gap-3">
               <Button
@@ -73,7 +92,12 @@ export default function JobDetailPage() {
                 // onClick={() => router.push(user ? `/experts` : "/login")}
                 onClick={() => {
                   if (!user) return router.push("/login");
-                  router.push(`/experts/${job.contact_id || 1}`);
+                  // router.push(`/experts/${job.contact_id || 1}`);
+                  router.push(
+                    job.contact_id && String(job.contact_id).trim()
+                      ? `/experts/${job.contact_id}`
+                      : "/contact",
+                  );
                 }}
               >
                 快速咨询

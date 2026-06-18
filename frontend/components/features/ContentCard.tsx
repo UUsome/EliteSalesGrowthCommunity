@@ -16,16 +16,16 @@ interface ContentCardProps {
 }
 
 const typeColors: Record<string, "primary" | "success" | "info"> = {
-  "销售资料": "primary",
-  "成功案例": "success",
-  "产品更新": "info",
+  销售资料: "primary",
+  成功案例: "success",
+  产品更新: "info",
 };
 
 export function ContentCard({ item }: ContentCardProps) {
   return (
     <Link href={`/content/${item.id}`}>
       <Card hover className="h-full">
-        <div className="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 rounded-t-xl flex items-center justify-center text-gray-400 text-sm">
+        {/*<div className="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 rounded-t-xl flex items-center justify-center text-gray-400 text-sm">
           {item.cover_image ? (
             <img
               src={item.cover_image}
@@ -35,9 +35,13 @@ export function ContentCard({ item }: ContentCardProps) {
           ) : (
             <span>📄 {item.content_type}</span>
           )}
-        </div>
+        </div>*/}
         <CardContent>
-          <Badge variant={typeColors[item.content_type] || "default"} size="sm" className="mb-2">
+          <Badge
+            variant={typeColors[item.content_type] || "default"}
+            size="sm"
+            className="mb-2"
+          >
             {item.content_type}
           </Badge>
           <h4 className="font-semibold text-gray-900 text-sm leading-snug">

@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useState, type FormEvent } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { posts as postsApi, ApiError } from "@/lib/api";
@@ -10,6 +9,7 @@ import { Textarea } from "@/components/ui/Input";
 import { PageLoading } from "@/components/ui/Loading";
 import { formatRelativeTime, truncate } from "@/lib/utils";
 import { useAuth } from "@/lib/auth-context";
+import { MarkdownRenderer } from "@/components/ui/MarkdownRenderer";
 
 export default function PostDetailPage() {
   const params = useParams();
@@ -91,7 +91,7 @@ export default function PostDetailPage() {
           <h1 className="text-xl font-bold text-gray-900 mb-3">{post.title}</h1>
 
           <div className="text-sm text-gray-600 mb-4 whitespace-pre-line">
-            {post.content}
+            <MarkdownRenderer content={post.content} />
           </div>
           <div className="flex items-center gap-4 text-xs text-gray-400 border-t border-gray-100 pt-3">
             <span>

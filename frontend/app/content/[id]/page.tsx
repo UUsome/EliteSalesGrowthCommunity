@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { PageLoading } from "@/components/ui/Loading";
 import { formatRelativeTime } from "@/lib/utils";
+import { MarkdownRenderer } from "@/components/ui/MarkdownRenderer";
 
 const typeColors: Record<string, "primary" | "success" | "info"> = {
   销售资料: "primary",
@@ -79,7 +80,7 @@ export default function ContentDetailPage() {
           )}
 
           <div className="prose prose-sm max-w-none text-gray-700 whitespace-pre-line">
-            {content.content}
+            <MarkdownRenderer content={content.content} />
           </div>
 
           <div className="flex items-center gap-4 mt-8 pt-4 border-t border-gray-100">
