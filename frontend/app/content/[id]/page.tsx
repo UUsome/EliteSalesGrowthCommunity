@@ -10,9 +10,9 @@ import { PageLoading } from "@/components/ui/Loading";
 import { formatRelativeTime } from "@/lib/utils";
 
 const typeColors: Record<string, "primary" | "success" | "info"> = {
-  "销售资料": "primary",
-  "成功案例": "success",
-  "产品更新": "info",
+  销售资料: "primary",
+  成功案例: "success",
+  产品更新: "info",
 };
 
 export default function ContentDetailPage() {
@@ -38,7 +38,8 @@ export default function ContentDetailPage() {
   };
 
   if (loading) return <PageLoading />;
-  if (!content) return <div className="text-center py-16 text-gray-400">内容不存在</div>;
+  if (!content)
+    return <div className="text-center py-16 text-gray-400">内容不存在</div>;
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-6">
@@ -51,8 +52,10 @@ export default function ContentDetailPage() {
           >
             {content.content_type}
           </Badge>
-          <h1 className="text-2xl font-bold text-gray-900 mb-3">{content.title}</h1>
-{/*
+          <h1 className="text-2xl font-bold text-gray-900 mb-3">
+            {content.title}
+          </h1>
+          {/*
           {content.cover_image && (
             <div className="mb-4 rounded-lg overflow-hidden">
               <img
