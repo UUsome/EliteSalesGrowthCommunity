@@ -1,13 +1,18 @@
 # 前端依赖
-node_modules/
 frontend/node_modules/
 # Next构建缓存
-.next/
-dist/
-build/
-# 环境、日志文件
-.env
-.env.*
-*.log
+frontend/.next/
+frontend/dist/
+frontend/build/
+frontend/package-lock.json
+frontend/tsconfig.tsbuildinfo
 # 大二进制文件
-*.node
+frontend/*.node
+
+# 环境、日志文件
+backend/venv/
+backend/__pycache__/
+backend/*.pyc
+backend/uploads/*
+backend/data/*
+backend/.env
