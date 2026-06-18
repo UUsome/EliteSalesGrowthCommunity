@@ -70,7 +70,11 @@ export default function JobDetailPage() {
             <div className="mt-3 flex gap-3">
               <Button
                 variant="outline"
-                onClick={() => router.push(user ? `/experts` : "/login")}
+                // onClick={() => router.push(user ? `/experts` : "/login")}
+                onClick={() => {
+                  if (!user) return router.push("/login");
+                  router.push(`/experts/${job.contact_id || 1}`);
+                }}
               >
                 快速咨询
               </Button>

@@ -52,7 +52,7 @@ export default function ContentDetailPage() {
             {content.content_type}
           </Badge>
           <h1 className="text-2xl font-bold text-gray-900 mb-3">{content.title}</h1>
-
+{/*
           {content.cover_image && (
             <div className="mb-4 rounded-lg overflow-hidden">
               <img
@@ -61,7 +61,7 @@ export default function ContentDetailPage() {
                 className="w-full object-cover max-h-96"
               />
             </div>
-          )}
+          )}*/}
 
           <div className="flex items-center gap-3 text-xs text-gray-400 mb-6">
             {content.author && <span>作者：{content.author}</span>}

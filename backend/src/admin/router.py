@@ -284,56 +284,6 @@ async def soft_delete_job(
 
 
 # ═══════════════════════════════════════════════════════
-#  JOB CONTACTS
-# ═══════════════════════════════════════════════════════
-@router.get("/job-contacts")
-async def list_job_contacts(
-    skip: int = Query(0, ge=0), limit: int = Query(20, le=200), search: str | None = None,
-    admin: User = Depends(require_admin), db: AsyncSession = Depends(get_db),
-):
-    q = select(JobContact).order_by(JobContact.id.desc())
-    if search:
-        q = q.where(JobContact.name.ilike(f"%{search}%"))
-    q = q.offset(skip).limit(limit)
-    total_q = select(func.count()).select_from(JobContact)
-    if search:
-        total_q = total_q.where(JobContact.name.ilike(f"%{search}%"))
-    # 下边三行错误，由最下替换
-    # items = (await db.execute(q)).scalars().all()
-    # total = (await db.execute(total_q)).scalar() or 0
-    # return {"items": items, "total": total, "skip": skip, "limit": limit}
-    orm_items = (await db.execute(q)).scalars().all()
-    total = (await db.execute(total_q)).scalar() or 0
-    serialized = []
-    for item in orm_items:
-        d = {}
-        for col in item.__table__.columns:
-            val = getattr(item, col.name)
-            if isinstance(val, datetime):
-                val = val.isoformat()
-            d[col.name] = val
-        serialized.append(d)
-
-    return {"items": serialized, "total": total, "skip": skip, "limit": limit}
-
-
-@router.post("/job-contacts", status_code=201)
-async def create_job_contact(data: dict, admin: User = Depends(require_admin), db: AsyncSession = Depends(get_db)):
-    allowed = {"name", "mobile", "wechat", "qq", "tags", "contact_type", "remark"}
-    obj = JobContact(**{k: v for k, v in data.items() if k in allowed})
-    db.add(obj)
-    await db.commit()
-    await db.refresh(obj)
-    return obj
-
-
-@router.put("/job-contacts/{entity_id}")
-async def update_job_contact(entity_id: int, data: dict,
-                             admin: User = Depends(require_admin), db: AsyncSession = Depends(get_db)):
-    allowed = {"name", "mobile", "wechat", "qq", "tags", "contact_type", "remark", "is_active"}
-    return await _update_from_dict(db, await _get_entity(db, JobContact, entity_id), data, allowed)
-
-# ═══════════════════════════════════════════════════════
 #  CONTACTS  —— 软删除 + 显示/隐藏
 # ═══════════════════════════════════════════════════════
 @router.get("/jobs_contacts")
